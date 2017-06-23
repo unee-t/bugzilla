@@ -1,0 +1,41 @@
+version: '2'
+services:
+    bugzilla:
+      build: .
+      ports:
+        - 8081:80
+      depends_on:
+        - db
+      networks:
+        - network
+
+    db:
+      image: mysql:5.6
+      ports:
+        - 3306:3306
+      environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      volumes:
+            - mysql:/var/lib/mysql
+      networks:
+            - network
+
+    adminer:
+     image: adminer
+     ports:
+        - 8080:8080
+     depends_on:
+        - db
+     networks:
+        - network
+
+networks:
+    network:
+        driver: bridge
+
+volumes:
+    mysql:
+        driver: local

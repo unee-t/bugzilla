@@ -1,0 +1,5 @@
+$answer{'ADMIN_EMAIL'} = 'bugzilla.dev@unee-t.com';
+$answer{'ADMIN_PASSWORD'} = 'password';
+$answer{'ADMIN_REALNAME'} = 'Administrator';
+$answer{'NO_PAUSE'} = 1
+$answer{'db_check'} = 0
