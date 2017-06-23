@@ -34,6 +34,8 @@ COPY bugzilla_admin /opt/bugzilla/bugzilla_admin
 # Add start script
 ADD start /opt/
 
+VOLUME /opt/bugzilla/template/en/custom
+
 # Run start script
 CMD ["/opt/start"]
 
