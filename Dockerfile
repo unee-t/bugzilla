@@ -30,7 +30,6 @@ RUN a2ensite bugzilla
 # email sending configuration
 COPY msmtprc /etc/msmtprc
 COPY bugzilla_admin /opt/bugzilla/bugzilla_admin
-RUN ./checksetup.pl bugzilla_admin
 
 # Add start script
 ADD start /opt/
