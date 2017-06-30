@@ -4,7 +4,7 @@ MAINTAINER Kai Hendry <hendry+lmb@iki.fi>
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y curl apache2 make gcc g++ \
 	libxml2-dev libgd-dev vim-tiny libdbd-mysql-perl \
-	libapache2-mod-perl2 libmariadb-client-lgpl-dev msmtp
+	libapache2-mod-perl2 libmariadb-client-lgpl-dev msmtp gettext-base
 
 RUN a2enmod headers expires
 RUN a2dissite 000-default
@@ -28,12 +28,14 @@ RUN a2enmod rewrite headers expires cgi
 RUN a2ensite bugzilla
 
 # email sending configuration
-COPY msmtprc /etc/msmtprc
+COPY msmtprc /etc/msmtprc.temp
+
 COPY bugzilla_admin /opt/bugzilla/bugzilla_admin
 
 # Add start script
 ADD start /opt/
 
+VOLUME /opt/bugzilla/skins/contrib/skin
 VOLUME /opt/bugzilla/template/en/custom
 
 # Run start script

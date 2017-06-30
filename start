@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 # Set up bugzilla and run apache2
 
 MYSQL_HOST=db
@@ -7,6 +7,8 @@ MYSQL_ROOT_PASSWORD=uniti
 MYSQL_DATABASE=bugzilla
 MYSQL_USER=mysql
 MYSQL_PASSWORD=jai7Paib
+
+envsubst < /etc/msmtprc.temp > /etc/msmtprc
 
 cd /opt/bugzilla
 
