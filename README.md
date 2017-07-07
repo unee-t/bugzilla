@@ -9,7 +9,24 @@ Requires [docker](https://www.docker.com/) &
 You might need to do a `make ${up,down,up}` to make it all work due to the
 setup phases of {bugzilla,db}
 
-Login info, see [bugzilla_admin](bugzilla_admin)
+# Login info
+
+If you are using the default primed sql/demo state username;password are:
+
+	administrator@example.com;administrator
+	anabelle@example.com;anabelle
+	celeste@example.com;celeste
+	jocelyn@example.com;jocelyn
+	lawrence@example.com;lawrence
+	leonel@example.com;leonel
+	marina@example.com;marina
+	marley@example.com;marley
+	marvin@example.com;marvin
+	michael@example.com;michael
+	regina@example.com;regina
+	sabrina@example.com;sabrina
+
+Else if not sql/demo see [bugzilla_admin](bugzilla_admin)
 
 # Debug
 
@@ -45,3 +62,13 @@ yourself as we can't have them in a public repo!
 * SES_VERIFIED_SENDER
 
 `SES*` is required for email notifications.
+
+# State snapshots
+
+Save:
+
+	mysqldump -h 127.0.0.1 -P 3306 -u root --password=uniti bugzilla > demo.sql
+
+Restore:
+
+	mysql -h 127.0.0.1 -P 3306 -u root --password=uniti bugzilla < fresh.sql
