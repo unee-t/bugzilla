@@ -1,9 +1,9 @@
-Requires docker & docker-compose. Linux is definitely a plus!
+Requires [docker](https://www.docker.com/) &
+[docker-compose](https://docs.docker.com/compose/). Linux is definitely a plus!
 
 # Run
 
 	make up
-
 	make down
 
 You might need to do a `make ${up,down,up}` to make it all work due to the
@@ -34,3 +34,14 @@ After creating a bug:
 You shouldn't need to do this since normally we should use out gitlab hosted Bugzilla image.
 
 	make build
+
+# Environment
+
+Some values defined in [the environment file](.env)  need to be managed by
+yourself as we can't have them in a public repo!
+
+* SES_SMTP_USERNAME
+* SES_SMTP_PASSWORD
+* SES_VERIFIED_SENDER
+
+`SES*` is required for email notifications.
