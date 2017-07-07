@@ -1,12 +1,13 @@
-Requires docker & docker-compose
-
-# Build
-
-	make build
+Requires docker & docker-compose. Linux is definitely a plus!
 
 # Run
 
-	make run
+	make up
+
+	make down
+
+You might need to do a `make ${up,down,up}` to make it all work due to the
+setup phases of {bugzilla,db}
 
 Login info, see [bugzilla_admin](bugzilla_admin)
 
@@ -18,13 +19,7 @@ The prefix `docker_` might be different on your system.
 
 # Database explorer
 
-http://localhost:8080/ see [environment](.env) for credentials
-
-# Local store of database
-
-	docker volume inspect docker_mysql
-
-Of try `docker volume ls | grep mysql`
+http://localhost:8082/ see [environment](.env) for credentials
 
 # JSON API
 
@@ -33,3 +28,9 @@ Of try `docker volume ls | grep mysql`
 After creating a bug:
 
 	curl http://localhost:8081/rest/bug/1 | jq
+
+# Build
+
+You shouldn't need to do this since normally we should use out gitlab hosted Bugzilla image.
+
+	make build

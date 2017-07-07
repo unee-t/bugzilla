@@ -5,6 +5,14 @@ services:
       restart: on-failure
       ports:
         - 8081:80
+      environment:
+            SES_SMTP_USERNAME: ${SES_SMTP_USERNAME}
+            SES_SMTP_PASSWORD: ${SES_SMTP_PASSWORD}
+            SES_VERIFIED_SENDER: ${SES_VERIFIED_SENDER}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       depends_on:
         - db
       volumes:
@@ -14,7 +22,7 @@ services:
         - network
 
     db:
-      image: mysql:5.6
+      image: mariadb
       ports:
         - 3306:3306
       environment:
@@ -23,14 +31,14 @@ services:
             MYSQL_USER: ${MYSQL_USER}
             MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       volumes:
-            - ./mysql:/var/lib/mysql
+            - "./mariadb:/var/lib/mysql"
       networks:
             - network
 
     adminer:
      image: adminer
      ports:
-        - 8080:8080
+        - 8082:8080
      depends_on:
         - db
      networks:

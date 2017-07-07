@@ -4,5 +4,14 @@ validate:
 build:
 	docker-compose build
 
-run:
+up:
 	docker-compose up
+
+down:
+	docker-compose down
+
+update:
+	docker-compose pull
+
+mysqlogin:
+	mysql -h 127.0.0.1 -P 3306 -u root --password=uniti bugzilla
