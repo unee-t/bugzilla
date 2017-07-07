@@ -4,7 +4,7 @@ MAINTAINER Kai Hendry <hendry+lmb@iki.fi>
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y curl apache2 make gcc g++ \
 	libxml2-dev libgd-dev vim-tiny libdbd-mysql-perl \
-	libapache2-mod-perl2 libmariadb-client-lgpl-dev msmtp gettext-base
+	libapache2-mod-perl2 libmariadb-client-lgpl-dev msmtp msmtp-mta gettext-base
 
 RUN a2enmod headers expires
 RUN a2dissite 000-default

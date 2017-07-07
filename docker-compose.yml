@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
     bugzilla:
       image: registry.gitlab.com/unee-t/bugzilla
@@ -31,9 +31,16 @@ services:
             MYSQL_USER: ${MYSQL_USER}
             MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       volumes:
-            - "./mariadb:/var/lib/mysql"
+            - ./mariadb:/var/lib/mysql
+            - ./sql:/docker-entrypoint-initdb.d
       networks:
             - network
+      healthcheck:
+           test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "--password=uniti"]
+           timeout: 20s
+           retries: 10
+
+
 
     adminer:
      image: adminer
