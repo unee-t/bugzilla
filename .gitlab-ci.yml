@@ -1,9 +1,11 @@
- build:
-   image: docker:latest
-   services:
-   - docker:dind
-   stage: build
-   script:
-     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
-     - docker build -t registry.gitlab.com/unee-t/bugzilla .
-     - docker push registry.gitlab.com/unee-t/bugzilla
+services:
+  - docker:dind
+
+before_script:
+  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+
+build:
+  stage: build
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8} -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME .
+    - docker push $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8} $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
