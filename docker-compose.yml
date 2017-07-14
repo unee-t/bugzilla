@@ -1,7 +1,7 @@
 version: '3'
 services:
     bugzilla:
-      image: registry.gitlab.com/unee-t/bugzilla
+      build: .
       restart: on-failure
       ports:
         - 8081:80
