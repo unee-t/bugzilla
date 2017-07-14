@@ -1,7 +1,7 @@
-version: '3'
+version: '2'
 services:
     bugzilla:
-      image: registry.gitlab.com/unee-t/bugzilla
+      image: registry.gitlab.com/unee-t/bugzilla:master
       restart: on-failure
       ports:
         - 8081:80
@@ -35,12 +35,6 @@ services:
             - ./sql:/docker-entrypoint-initdb.d
       networks:
             - network
-      healthcheck:
-           test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-u", "root", "--password=uniti"]
-           timeout: 20s
-           retries: 10
-
-
 
     adminer:
      image: adminer
