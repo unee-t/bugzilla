@@ -1,9 +1,6 @@
 #!/bin/sh -e
 # Set up bugzilla and run apache2
 
-MYSQL_HOST=db
-MYSQL_PORT=3306
-
 envsubst < /etc/msmtprc.temp > /etc/msmtprc
 
 cd /opt/bugzilla

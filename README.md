@@ -72,3 +72,8 @@ Save:
 Restore:
 
 	mysql -h 127.0.0.1 -P 3306 -u root --password=uniti bugzilla < fresh.sql
+
+# How to check for mail when in test mode
+
+	docker exec -it bugzilla_bugzilla_1 /bin/bash
+	cat data/mailer.testfile

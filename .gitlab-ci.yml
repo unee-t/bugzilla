@@ -8,3 +8,12 @@ build:
     - docker build -t $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8} -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
     - docker push $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8}
+    - eval $(aws ecr get-login --region $AWS_DEFAULT_REGION)
+    - curl -o /usr/local/bin/ecs-cli https://s3.amazonaws.com/amazon-ecs-cli/ecs-cli-linux-amd64-latest
+    - chmod +x /usr/local/bin/ecs-cli
+    - /usr/local/bin/ecs-cli --version
+    - /usr/local/bin/ecs-cli configure -c $CI_COMMIT_REF_NAME
+    - envsubst < docker-compose.yml.AWS-ECS > docker-compose.yml
+    - cat docker-compose.yml
+    - /usr/local/bin/ecs-cli compose -p $CI_COMMIT_REF_NAME service up
+    - /usr/local/bin/ecs-cli compose ps
