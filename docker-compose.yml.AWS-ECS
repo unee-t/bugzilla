@@ -1,7 +1,7 @@
 version: '2'
 services:
     bugzilla:
-      image: registry.gitlab.com/unee-t/bugzilla:${CI_COMMIT_SHA:0:8}
+      image: registry.gitlab.com/unee-t/bugzilla:${COMMIT}
       restart: on-failure
       ports:
         - 80:80

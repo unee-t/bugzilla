@@ -77,3 +77,10 @@ Restore:
 
 	docker exec -it bugzilla_bugzilla_1 /bin/bash
 	cat data/mailer.testfile
+
+# Setting up AWS ECS
+
+Cluster name is named after branch name.
+
+	ecs-cli configure -c $BRANCH -r ap-southeast-1 -p $PROFILE
+	ecs-cli up --keypair $KEYPAIR --capability-iam

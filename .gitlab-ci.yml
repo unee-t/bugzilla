@@ -2,6 +2,9 @@ stages:
       - build
       - deploy
 
+variables:
+    COMMIT: ${CI_COMMIT_SHA:0:8}
+
 build:
   stage: build
   image: docker:latest
@@ -9,9 +12,9 @@ build:
    - docker:dind
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - docker build -t $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8} -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME .
+    - docker build -t $CI_REGISTRY_IMAGE:${COMMIT} -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME .
     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
-    - docker push $CI_REGISTRY_IMAGE:${CI_COMMIT_SHA:0:8}
+    - docker push $CI_REGISTRY_IMAGE:${COMMIT}
 
 deploy:
   stage: deploy
@@ -23,7 +26,6 @@ deploy:
     - /usr/local/bin/ecs-cli --version
     - /usr/local/bin/ecs-cli configure -c $CI_COMMIT_REF_NAME
     - envsubst < docker-compose.yml.AWS-ECS > docker-compose.yml
-    - cat docker-compose.yml
     - /usr/local/bin/ecs-cli compose -p $CI_COMMIT_REF_NAME service up
     - /usr/local/bin/ecs-cli compose ps
   only:
