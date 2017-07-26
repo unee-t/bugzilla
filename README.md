@@ -63,6 +63,8 @@ yourself as we can't have them in a public repo!
 
 `SES*` is required for email notifications.
 
+Deployment secrets are managed upon [pipeline settings](https://gitlab.com/unee-t/bugzilla/settings/ci_cd).
+
 # State snapshots
 
 Save:
@@ -83,4 +85,4 @@ Restore:
 Cluster name is named after branch name.
 
 	ecs-cli configure -c $BRANCH -r ap-southeast-1 -p $PROFILE
-	ecs-cli up --keypair $KEYPAIR --capability-iam
+	ecs-cli up --keypair $KEYPAIR --capability-iam --instance-type t2.small

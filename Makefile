@@ -10,7 +10,7 @@ up:
 down:
 	docker-compose down
 
-update:
+pull:
 	docker-compose pull
 
 mysqlogin:
