@@ -86,3 +86,7 @@ Cluster name is named after branch name.
 
 	ecs-cli configure -c $BRANCH -r ap-southeast-1 -p $PROFILE
 	ecs-cli up --keypair $KEYPAIR --capability-iam --instance-type t2.small
+
+# ADMIN KEY
+
+	export BUGZILLA_ADMIN_KEY=I6zRu7bPak687rcIBCkNbFKblfRXPn2X3xgEFz99
