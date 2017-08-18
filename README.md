@@ -7,7 +7,7 @@ Requires [docker](https://www.docker.com/) &
 	make down
 
 You might need to do a `make ${up,down,up}` to make it all work due to the
-setup phases of {bugzilla,db}
+setup phases of {bugzilla,db} being a bit difficult to co-ordinate with docker compose.
 
 # Login info
 
@@ -42,9 +42,11 @@ http://localhost:8082/ see [environment](.env) for credentials
 
 <http://bugzilla.readthedocs.io/en/latest/api/>
 
-After creating a bug:
-
 	curl http://localhost:8081/rest/bug/1 | jq
+
+Or upon the dev server:
+
+	curl -s https://dev.unee-t.com/rest/bug/1?api_key=I6zRu7bPak687rcIBCkNbFKblfRXPn2X3xgEFz99 | jq
 
 # Build
 
@@ -55,13 +57,13 @@ You shouldn't need to do this since normally we should use out gitlab hosted Bug
 # Environment
 
 Some values defined in [the environment file](.env)  need to be managed by
-yourself as we can't have them in a public repo!
+yourself as we can't have AWS secrets in a public repo!
 
 * SES_SMTP_USERNAME
 * SES_SMTP_PASSWORD
 * SES_VERIFIED_SENDER
 
-`SES*` is required for email notifications.
+`SES*` is required for email notifications. [SES dashboard](https://us-west-2.console.aws.amazon.com/ses/home?region=us-west-2#dashboard:)
 
 Deployment secrets are managed upon [pipeline settings](https://gitlab.com/unee-t/bugzilla/settings/ci_cd).
 
@@ -75,18 +77,18 @@ Restore:
 
 	mysql -h 127.0.0.1 -P 3306 -u root --password=uniti bugzilla < fresh.sql
 
+To restore on dev server:
+
+	mysql -h db.dev.unee-t.com -P 3306 -u root --password=SECRET bugzilla < demo.sql
+
 # How to check for mail when in test mode
 
 	docker exec -it bugzilla_bugzilla_1 /bin/bash
 	cat data/mailer.testfile
 
-# Setting up AWS ECS
+# AWS ECS setup
 
-Cluster name is named after branch name.
+Cluster is named after branch name.
 
 	ecs-cli configure -c $BRANCH -r ap-southeast-1 -p $PROFILE
 	ecs-cli up --keypair $KEYPAIR --capability-iam --instance-type t2.small
-
-# ADMIN KEY
-
-	export BUGZILLA_ADMIN_KEY=I6zRu7bPak687rcIBCkNbFKblfRXPn2X3xgEFz99
