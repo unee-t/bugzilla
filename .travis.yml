@@ -2,22 +2,12 @@ sudo: required
 language: generic
 services:
 - docker
-before_install:
-- docker build -t $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$COMMIT
-  --build-arg COMMIT=${COMMIT} .
+
+install:
+ - docker build -t uneet/bugzilla .
+
 after_success:
-- pip install --user awscli
-- export PATH=$PATH:$HOME/.local/bin
-- eval $(aws ecr get-login --region $AWS_DEFAULT_REGION)
-- docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$REPO:$COMMIT
-
-deploy:
-  provider: script
-  script: "./deploy.sh"
-  on:
-    branch: master
-
-env:
-  global:
-    - COMMIT=${TRAVIS_COMMIT::7}
-    - REPO: $(echo $TRAVIS_REPO_SLUG | cut -f2 -d/)
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    docker push uneet/bugzilla;
+    fi
