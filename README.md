@@ -91,4 +91,4 @@ To restore on dev server:
 Cluster is named after branch name.
 
 	ecs-cli configure -c $BRANCH -r ap-southeast-1 -p $PROFILE
-	ecs-cli up --keypair $KEYPAIR --capability-iam --instance-type t2.small
+	ecs-cli up --vpc vpc-efc2838b --subnets subnet-846169e0,subnet-cf7b46b9 --instance-type t2.medium --capability-iam --keypair hendry
