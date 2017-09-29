@@ -1,0 +1,15 @@
+version: '2'
+services:
+    bugzilla:
+      image: uneet/bugzilla
+      restart: on-failure
+      ports:
+        - 8081:80
+      environment:
+            SES_VERIFIED_SENDER: bugzilla.dev@unee-t.com
+            MYSQL_HOST: db.dev.unee-t.com
+            MYSQL_PORT: 3306
+            MYSQL_ROOT_PASSWORD: jai7Paib
+            MYSQL_DATABASE: bugzilla
+            MYSQL_USER: root
+            MYSQL_PASSWORD: jai7Paib
