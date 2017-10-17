@@ -6,9 +6,9 @@ services:
        - "8080:80"
       environment:
        - BUNDLE_URL=https://unee-t-media.s3-accelerate.amazonaws.com/2017-08-31/unee-t-fe.tar.gz
-       - ROOT_URL=https://dev.unee-t.com
-       - BUGZILLA_URL=https://bugzilla.dev.unee-t.com/
-       - BUGZILLA_ADMIN_KEY=I6zRu7bPak687rcIBCkNbFKblfRXPn2X3xgEFz99
+       - ROOT_URL=${ROOT_URL}
+       - BUGZILLA_URL=${BUGZILLA_URL}
+       - BUGZILLA_ADMIN_KEY=${BUGZILLA_ADMIN_KEY}
        - MONGO_URL=mongodb://mongo:27017/mydatabase
       logging:
             driver: awslogs
