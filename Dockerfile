@@ -20,7 +20,8 @@ RUN ./install-module.pl --all
 
 # Set up apache link to bugzilla
 ADD bugzilla.conf /etc/apache2/sites-available/
-RUN a2enmod rewrite headers expires cgi
+RUN a2dismod mpm_event
+RUN a2enmod rewrite headers expires cgi mpm_prefork
 RUN a2ensite bugzilla
 
 # email sending configuration
