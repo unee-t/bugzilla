@@ -9,7 +9,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y curl apache2 make gcc g++ 
 RUN a2enmod headers expires
 RUN a2dissite 000-default
 
-ENV BUGZILLA bugzilla-5.0.3
+ENV BUGZILLA bugzilla-5.0.4
 ENV BUGZILLA_TAR $BUGZILLA.tar.gz
 ENV BUGZILLA_URL http://ftp.mozilla.org/pub/mozilla.org/webtools/$BUGZILLA_TAR
 RUN curl --silent --output "/tmp/$BUGZILLA_TAR" "$BUGZILLA_URL"
