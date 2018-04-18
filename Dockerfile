@@ -16,6 +16,7 @@ RUN curl --silent --output "/tmp/$BUGZILLA_TAR" "$BUGZILLA_URL"
 RUN tar xzvf "/tmp/$BUGZILLA_TAR" --directory /opt/
 RUN cd /opt/ && ln -s "$BUGZILLA" bugzilla
 WORKDIR /opt/bugzilla
+RUN curl -O https://patch-diff.githubusercontent.com/raw/bugzilla/bugzilla/pull/62.diff && patch -p1 < 62.diff
 RUN ./install-module.pl --all
 
 # Set up apache link to bugzilla
