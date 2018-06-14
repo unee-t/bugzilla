@@ -5,10 +5,12 @@ MAINTAINER Kai Hendry <kai.hendry@unee-t.com>
 RUN apt-get update
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y curl apache2 make gcc g++ \
     libxml2-dev libgd-dev vim-tiny libdbd-mysql-perl \
-    libapache2-mod-perl2 libmariadb-client-lgpl-dev msmtp msmtp-mta gettext-base
+    libapache2-mod-perl2 libmariadb-client-lgpl-dev msmtp msmtp-mta gettext-base tzdata
 
 RUN apt-get install -y cpanminus
 RUN cpanm --notest App::cpm Module::CPANfile
+
+RUN ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 
 RUN a2enmod headers expires
 RUN a2dissite 000-default
