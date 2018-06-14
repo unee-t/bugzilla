@@ -22,12 +22,14 @@ RUN curl --silent --output "/tmp/$BUGZILLA_TAR" "$BUGZILLA_URL"
 RUN tar xzvf "/tmp/$BUGZILLA_TAR" --directory /opt/
 RUN cd /opt/ && ln -s "$BUGZILLA" bugzilla
 WORKDIR /opt/bugzilla
-RUN curl -O https://patch-diff.githubusercontent.com/raw/bugzilla/bugzilla/pull/62.diff && patch -p1 < 62.diff
-
 COPY gen-cpanfile.pl /usr/local/bin/gen-cpanfile.pl
 RUN perl Build.PL && \
     perl /usr/local/bin/gen-cpanfile.pl && \
     cpm install -g --with-recommends --without-test
+
+# MyISAM to InnoDB https://github.com/bugzilla/bugzilla/pull/62
+COPY 62.diff .
+RUN patch -p1 < 62.diff
 
 # Set up apache link to bugzilla
 ADD bugzilla.conf /etc/apache2/sites-available/
