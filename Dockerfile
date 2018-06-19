@@ -12,7 +12,6 @@ RUN cpanm --notest App::cpm Module::CPANfile
 
 RUN ln -sf /usr/share/zoneinfo/UTC /etc/localtime
 
-RUN a2enmod headers expires
 RUN a2dissite 000-default
 
 # END STUFF FOR BASE IMAGE
@@ -36,7 +35,7 @@ RUN patch -p1 < 62.diff
 # Set up apache link to bugzilla
 ADD bugzilla.conf /etc/apache2/sites-available/
 RUN a2dismod mpm_event
-RUN a2enmod rewrite headers expires cgi mpm_prefork
+RUN a2enmod rewrite headers expires cgi mpm_prefork remoteip
 RUN a2ensite bugzilla
 
 # email sending configuration
