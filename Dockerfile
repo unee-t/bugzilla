@@ -16,21 +16,18 @@ RUN a2dissite 000-default
 
 # END STUFF FOR BASE IMAGE
 
-ENV BUGZILLA bugzilla-5.0.4
-ENV BUGZILLA_TAR $BUGZILLA.tar.gz
-ENV BUGZILLA_URL http://ftp.mozilla.org/pub/mozilla.org/webtools/$BUGZILLA_TAR
-RUN curl --silent --output "/tmp/$BUGZILLA_TAR" "$BUGZILLA_URL"
-RUN tar xzvf "/tmp/$BUGZILLA_TAR" --directory /opt/
+# https://github.com/bugzilla/bugzilla/releases
+ENV BUGZILLA_VERSION=5.0.6
+ENV BUGZILLA bugzilla-release-$BUGZILLA_VERSION
+ENV BUGZILLA_TAR release-$BUGZILLA_VERSION.tar.gz
+RUN curl -Ls -o "/tmp/$BUGZILLA_TAR" "https://github.com/bugzilla/bugzilla/archive/$BUGZILLA_TAR"
+RUN tar zxvf "/tmp/$BUGZILLA_TAR" --directory /opt/
 RUN cd /opt/ && ln -s "$BUGZILLA" bugzilla
 WORKDIR /opt/bugzilla
 COPY gen-cpanfile.pl /usr/local/bin/gen-cpanfile.pl
 RUN perl Build.PL && \
     perl /usr/local/bin/gen-cpanfile.pl && \
     cpm install -g --with-recommends --without-test
-
-# MyISAM to InnoDB https://github.com/bugzilla/bugzilla/pull/62
-COPY 62.diff .
-RUN patch -p1 < 62.diff
 
 # Set up apache link to bugzilla
 ADD bugzilla.conf /etc/apache2/sites-available/
