@@ -1,10 +1,10 @@
 sudo: required
 language: generic
 services:
-- docker
+  - docker
 
 install:
- - docker build -t uneet/bugzilla .
+  - docker build -t uneet/bugzilla .
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
